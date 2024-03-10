@@ -4,15 +4,23 @@ namespace TestApp.UnitTests;
 
 public class MatchNamesTests
 {
-    [Test]
-    public void Test_Match_ValidNames_ReturnsMatchedNames()
+    [TestCase("John Smith and Alice Johnson", "John Smith Alice Johnson")]
+    [TestCase("Dimityr Robertov is here", "Dimityr Robertov")]
+    [TestCase("Hello,Dimityr Robertov", "Dimityr Robertov")]
+    [TestCase("Hello,Dimityr Robertov my friend", "Dimityr Robertov")]
+    [TestCase("Hello,Dimityr my friend", "")]
+    [TestCase("Dimityr", "")]
+    [TestCase("Dimityr Robertov", "Dimityr Robertov")]
+    [TestCase("Dimityr robertov", "")]
+    [TestCase("dimityr robertov", "")]
+    [TestCase("", "")]
+    [TestCase("Dimityr-Robertov", "")]
+    [TestCase("Dimityr  Robertov", "")]
+    public void Test_Match_ValidNames_ReturnsMatchedNames(string input, string expected)
     {
-        // Arrange
-        string names = "John Smith and Alice Johnson";
-        string expected = "John Smith Alice Johnson";
-
+       
         // Act
-        string result = MatchNames.Match(names);
+        string result = MatchNames.Match(input);
 
         // Assert
         Assert.That(result, Is.EqualTo(expected));
